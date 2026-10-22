@@ -20,6 +20,24 @@ export interface PatientGrowthStat {
   count: number;
 }
 
+export type PatientGrowthPeriod =
+  | "7d"
+  | "30d"
+  | "90d"
+  | "6m"
+  | "1y"
+  | "all";
+
+export type PatientGrowthInterval =
+  | "day"
+  | "month"
+  | "year";
+
+export interface DashboardQueryParams {
+  growthPeriod: PatientGrowthPeriod;
+  growthInterval: PatientGrowthInterval;
+}
+
 export interface DashboardData {
   stats: DashboardStats;
   conditions: ConditionStat[];

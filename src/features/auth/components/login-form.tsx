@@ -45,6 +45,7 @@ export function LoginForm() {
       <CardContent>
         <form
           className="space-y-4"
+          name="login"
           noValidate
           onSubmit={handleSubmit((values) => login.mutate(values))}
         >
@@ -53,7 +54,7 @@ export function LoginForm() {
             <Input
               id="email"
               type="email"
-              autoComplete="email"
+              autoComplete="username"
               aria-invalid={Boolean(errors.email)}
               aria-describedby={errors.email ? "login-email-error" : undefined}
               {...register("email")}
