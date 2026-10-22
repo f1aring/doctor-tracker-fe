@@ -1,8 +1,8 @@
 "use client";
 
 import {
-  Bell,
   Search,
+  Bell,
 } from "lucide-react";
 
 import {
@@ -16,6 +16,7 @@ import {
 import {
   MobileSidebar,
 } from "./mobile-sidebar";
+import { ThemeToggle } from "./theme-toggle";
 
 export function AppHeader() {
   return (
@@ -51,6 +52,8 @@ export function AppHeader() {
       </div>
 
       <div className="flex items-center gap-2">
+        <ThemeToggle />
+
         <div
           className="
             relative

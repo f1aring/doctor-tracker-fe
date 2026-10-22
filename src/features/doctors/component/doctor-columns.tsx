@@ -33,6 +33,7 @@ import {
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
@@ -141,33 +142,35 @@ export const doctorColumns: ColumnDef<
           <DropdownMenuContent
             align="end"
           >
-            <DropdownMenuLabel>
-              Actions
-            </DropdownMenuLabel>
+            <DropdownMenuGroup>
+              <DropdownMenuLabel>
+                Actions
+              </DropdownMenuLabel>
 
-            <DropdownMenuSeparator />
+              <DropdownMenuSeparator />
 
-            <DropdownMenuItem
-              render={
-                <Link
-                  href={ROUTES.DOCTORS.DETAIL(
-                    doctor.id
-                  )}
-                />
-              }
-            >
-              View Doctor
-            </DropdownMenuItem>
+              <DropdownMenuItem
+                render={
+                  <Link
+                    href={ROUTES.DOCTORS.DETAIL(
+                      doctor.id
+                    )}
+                  />
+                }
+              >
+                View Doctor
+              </DropdownMenuItem>
 
-            <DropdownMenuItem>
-              Edit Doctor
-            </DropdownMenuItem>
+              <DropdownMenuItem>
+                Edit Doctor
+              </DropdownMenuItem>
 
-            <DropdownMenuSeparator />
+              <DropdownMenuSeparator />
 
-            <DropdownMenuItem className="text-destructive">
-              Delete Doctor
-            </DropdownMenuItem>
+              <DropdownMenuItem className="text-destructive">
+                Delete Doctor
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
           </DropdownMenuContent>
         </DropdownMenu>
       );

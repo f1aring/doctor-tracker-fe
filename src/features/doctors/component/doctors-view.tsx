@@ -1,44 +1,27 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
+import { ErrorState } from "@/components/feedback/error-state";
+import { LoadingState } from "@/components/feedback/loading-state";
 import { PageHeader } from "@/components/layout/page-header";
 
 import { DoctorFilters } from "./doctor-filters";
 import { DoctorsTable } from "./doctors-table";
-
-import { mockDoctors } from "../data/mock-doctors";
-import {
-  AddDoctorDialog,
-} from "./add-doctor-dialog";
+import { AddDoctorDialog } from "./add-doctor-dialog";
+import { useDoctors } from "../hooks/use-doctors";
 
 export function DoctorsView() {
   const [search, setSearch] = useState("");
   const [specialization, setSpecialization] = useState("all");
   const [hospital, setHospital] = useState("all");
-
-  const doctors = useMemo(() => {
-    return mockDoctors.filter((doctor) => {
-      const matchesSearch =
-        doctor.name.toLowerCase().includes(search.toLowerCase()) ||
-        doctor.email.toLowerCase().includes(search.toLowerCase()) ||
-        doctor.hospital.toLowerCase().includes(search.toLowerCase());
-
-      const matchesSpecialization =
-        specialization === "all" ||
-        doctor.specialization === specialization;
-
-      const matchesHospital =
-        hospital === "all" ||
-        doctor.hospital === hospital;
-
-      return (
-        matchesSearch &&
-        matchesSpecialization &&
-        matchesHospital
-      );
-    });
-  }, [search, specialization, hospital]);
+  const doctors = useDoctors({
+    page: 1,
+    limit: 100,
+    search: search.trim() || undefined,
+    specialization: specialization === "all" ? undefined : specialization,
+    hospital: hospital === "all" ? undefined : hospital,
+  });
 
   return (
     <div className="space-y-6">
@@ -57,7 +40,18 @@ export function DoctorsView() {
         onHospitalChange={setHospital}
       />
 
-      <DoctorsTable doctors={doctors} />
+      {doctors.isPending ? (
+        <LoadingState message="Loading doctors..." />
+      ) : doctors.isError ? (
+        <ErrorState
+          description="Unable to load doctors."
+          onRetry={() => {
+            void doctors.refetch();
+          }}
+        />
+      ) : (
+        <DoctorsTable doctors={doctors.data.data} />
+      )}
     </div>
   );
 }
