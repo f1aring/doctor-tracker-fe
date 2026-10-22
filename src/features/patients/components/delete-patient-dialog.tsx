@@ -43,7 +43,11 @@ export function DeletePatientDialog({
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger
         render={
-          <Button size="sm" variant="destructive">
+          <Button
+            size="sm"
+            variant="destructive"
+            aria-label={`Delete ${name}`}
+          >
             Delete
           </Button>
         }

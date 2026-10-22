@@ -35,7 +35,7 @@ export function MobileSidebar() {
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger
-        aria-label="Open navigation menu"
+        aria-label="Open navigation"
         render={
           <Button
             variant="ghost"

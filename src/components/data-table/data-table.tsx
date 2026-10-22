@@ -52,7 +52,7 @@ export function DataTable<TData extends RowData>({
   return (
     <div className="space-y-4">
       <div className="overflow-hidden rounded-xl border bg-card">
-        <div className="overflow-x-auto">
+        <div className="w-full overflow-x-auto">
           <Table>
             <TableHeader>
               {table

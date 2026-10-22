@@ -15,8 +15,14 @@ export interface DoctorPatientStat {
   patientCount: number;
 }
 
+export interface PatientGrowthStat {
+  date: string;
+  count: number;
+}
+
 export interface DashboardData {
   stats: DashboardStats;
   conditions: ConditionStat[];
   patientsPerDoctor: DoctorPatientStat[];
+  patientGrowth: PatientGrowthStat[];
 }

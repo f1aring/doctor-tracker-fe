@@ -66,11 +66,12 @@ export function SearchInput({
             size-7
             -translate-y-1/2
           "
+          aria-label="Clear search"
           onClick={() =>
             onChange("")
           }
         >
-          <X className="size-4" />
+          <X aria-hidden="true" className="size-4" />
         </Button>
       )}
     </div>

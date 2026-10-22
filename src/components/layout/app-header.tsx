@@ -80,8 +80,9 @@ export function AppHeader() {
           variant="ghost"
           size="icon"
           className="relative"
+          aria-label="Open notifications"
         >
-          <Bell className="size-5" />
+          <Bell aria-hidden="true" className="size-5" />
 
           <span
             className="
