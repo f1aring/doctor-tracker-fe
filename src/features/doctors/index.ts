@@ -1,12 +1,10 @@
 export {
-  DoctorsView,
-} from "./component/doctors-view";
-
-export {
-  DoctorsTable,
-} from "./component/doctors-table";
+  AddDoctorDialog,
+} from "./components/add-doctor-dialog";
 
 export type {
   Doctor,
   DoctorQueryParams,
+  CreateDoctorPayload,
+  UpdateDoctorPayload,
 } from "./types/doctor.types";

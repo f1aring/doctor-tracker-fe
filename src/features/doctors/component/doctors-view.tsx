@@ -1,15 +1,16 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Plus } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
 import { PageHeader } from "@/components/layout/page-header";
 
 import { DoctorFilters } from "./doctor-filters";
 import { DoctorsTable } from "./doctors-table";
 
 import { mockDoctors } from "../data/mock-doctors";
+import {
+  AddDoctorDialog,
+} from "./add-doctor-dialog";
 
 export function DoctorsView() {
   const [search, setSearch] = useState("");
@@ -44,12 +45,7 @@ export function DoctorsView() {
       <PageHeader
         title="Doctors"
         description="Manage doctors and their patients."
-        actions={
-          <Button>
-            <Plus className="size-4" />
-            Add Doctor
-          </Button>
-        }
+        actions={<AddDoctorDialog />}
       />
 
       <DoctorFilters

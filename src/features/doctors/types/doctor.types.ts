@@ -19,3 +19,14 @@ export interface DoctorQueryParams {
   from?: string;
   to?: string;
 }
+
+export interface CreateDoctorPayload {
+  name: string;
+  specialization: string;
+  hospital: string;
+  phone: string;
+  email: string;
+}
+
+export type UpdateDoctorPayload =
+  Partial<CreateDoctorPayload>;
