@@ -9,5 +9,6 @@ export function useMe() {
     queryKey: ["auth", "me"],
     queryFn: authService.me,
     retry: false,
+    staleTime: 30_000,
   });
 }

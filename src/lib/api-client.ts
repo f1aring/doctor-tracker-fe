@@ -85,7 +85,12 @@ apiClient.interceptors.response.use(
       await refreshPromise;
       return await apiClient(request);
     } catch (refreshError) {
-      redirectToLogin();
+      const refreshStatus = axios.isAxiosError(refreshError)
+        ? refreshError.response?.status
+        : undefined;
+      if (refreshStatus === 401 || refreshStatus === 403) {
+        redirectToLogin();
+      }
       return Promise.reject(refreshError);
     }
   },
