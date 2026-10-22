@@ -4,7 +4,9 @@ import {
   useMutation,
   useQueryClient,
 } from "@tanstack/react-query";
+import { toast } from "sonner";
 
+import { getApiErrorMessage } from "@/lib/api-error";
 import {
   doctorService,
 } from "@/services/doctor.service";
@@ -23,11 +25,18 @@ export function useDeleteDoctor() {
     ) =>
       doctorService.delete(id),
 
-    onSuccess: () => {
-      queryClient.invalidateQueries({
+    onSuccess: (_, id) => {
+      void queryClient.invalidateQueries({
         queryKey:
           doctorKeys.all,
       });
+      queryClient.removeQueries({
+        queryKey: doctorKeys.detail(id),
+      });
+      toast.success("Doctor deleted successfully.");
+    },
+    onError: (error) => {
+      toast.error(getApiErrorMessage(error));
     },
   });
 }

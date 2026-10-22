@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -15,8 +14,6 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { getApiErrorMessage } from "@/lib/api-error";
-
 import { useDeletePatient } from "../hooks/use-delete-patient";
 
 export function DeletePatientDialog({
@@ -29,14 +26,10 @@ export function DeletePatientDialog({
   const [open, setOpen] = useState(false);
   const mutation = useDeletePatient();
 
-  async function remove() {
-    try {
-      await mutation.mutateAsync(id);
-      toast.success("Patient deleted");
-      setOpen(false);
-    } catch (error) {
-      toast.error(getApiErrorMessage(error));
-    }
+  function remove() {
+    mutation.mutate(id, {
+      onSuccess: () => setOpen(false),
+    });
   }
 
   return (

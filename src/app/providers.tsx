@@ -28,7 +28,7 @@ export function Providers({ children }: { children: ReactNode }) {
             enableSystem
           >
             {children}
-            <Toaster richColors position="top-right" />
+            <Toaster richColors position="bottom-right" />
           </ThemeProvider>
         </QueryClientProvider>
       </StoreProvider>

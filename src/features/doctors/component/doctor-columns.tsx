@@ -1,7 +1,5 @@
 "use client";
 
-import Link from "next/link";
-
 import type {
   ColumnDef,
 } from "@tanstack/react-table";
@@ -10,35 +8,15 @@ import {
   appTableFeatures,
 } from "@/components/data-table/table-features";
 
-import {
-  MoreHorizontal,
-} from "lucide-react";
-
 import type {
   Doctor,
 } from "../types/doctor.types";
 
 import {
-  ROUTES,
-} from "@/constants/routes";
-
-import {
   DataTableColumnHeader,
 } from "@/components/data-table/data-table-column-header";
 
-import {
-  Button,
-} from "@/components/ui/button";
-
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { DoctorRowActions } from "./doctor-row-actions";
 
 export const doctorColumns: ColumnDef<
   typeof appTableFeatures,
@@ -118,62 +96,6 @@ export const doctorColumns: ColumnDef<
 
     header: "",
 
-    cell: ({ row }) => {
-      const doctor =
-        row.original;
-
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger
-            render={
-              <Button
-                variant="ghost"
-                size="icon"
-                aria-label={`Actions for ${doctor.name}`}
-              />
-            }
-          >
-            <MoreHorizontal
-              aria-hidden="true"
-              className="size-4"
-            />
-          </DropdownMenuTrigger>
-
-          <DropdownMenuContent
-            align="end"
-          >
-            <DropdownMenuGroup>
-              <DropdownMenuLabel>
-                Actions
-              </DropdownMenuLabel>
-
-              <DropdownMenuSeparator />
-
-              <DropdownMenuItem
-                render={
-                  <Link
-                    href={ROUTES.DOCTORS.DETAIL(
-                      doctor.id
-                    )}
-                  />
-                }
-              >
-                View Doctor
-              </DropdownMenuItem>
-
-              <DropdownMenuItem>
-                Edit Doctor
-              </DropdownMenuItem>
-
-              <DropdownMenuSeparator />
-
-              <DropdownMenuItem className="text-destructive">
-                Delete Doctor
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
-    },
+    cell: ({ row }) => <DoctorRowActions doctor={row.original} />,
   },
 ];

@@ -4,7 +4,6 @@ import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Plus } from "lucide-react";
-import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -23,7 +22,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { getApiErrorMessage } from "@/lib/api-error";
 import { useDoctors } from "@/features/doctors/hooks/use-doctors";
 
 import { useCreatePatient } from "../hooks/use-create-patient";
@@ -64,21 +62,19 @@ export function AddPatientDialog({
     },
   });
 
-  async function onSubmit(values: PatientFormValues) {
-    try {
-      await createPatient.mutateAsync(values);
-      toast.success("Patient added successfully");
-      reset({
-        doctorId: doctorId ?? "",
-        name: "",
-        email: "",
-        phone: "",
-        condition: "Stable",
-      });
-      setOpen(false);
-    } catch (error) {
-      toast.error(getApiErrorMessage(error));
-    }
+  function onSubmit(values: PatientFormValues) {
+    createPatient.mutate(values, {
+      onSuccess: () => {
+        reset({
+          doctorId: doctorId ?? "",
+          name: "",
+          email: "",
+          phone: "",
+          condition: "Stable",
+        });
+        setOpen(false);
+      },
+    });
   }
 
   return (

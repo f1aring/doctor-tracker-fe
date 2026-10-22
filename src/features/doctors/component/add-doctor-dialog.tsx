@@ -4,7 +4,6 @@ import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Plus } from "lucide-react";
-import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -24,8 +23,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { getApiErrorMessage } from "@/lib/api-error";
-
 import { useCreateDoctor } from "../hooks/use-create-doctor";
 import {
   doctorSchema,
@@ -63,15 +60,13 @@ export function AddDoctorDialog() {
 
   const isPending = isSubmitting || createDoctor.isPending;
 
-  async function onSubmit(values: DoctorFormValues) {
-    try {
-      await createDoctor.mutateAsync(values);
-      toast.success("Doctor added successfully");
-      reset();
-      setOpen(false);
-    } catch (error) {
-      toast.error(getApiErrorMessage(error));
-    }
+  function onSubmit(values: DoctorFormValues) {
+    createDoctor.mutate(values, {
+      onSuccess: () => {
+        reset();
+        setOpen(false);
+      },
+    });
   }
 
   function handleOpenChange(nextOpen: boolean) {
