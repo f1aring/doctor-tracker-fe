@@ -2,6 +2,8 @@
 
 import { useEffect } from "react";
 
+import { Button } from "@/components/ui/button";
+
 export default function ErrorPage({
   error,
   retry,
@@ -14,18 +16,12 @@ export default function ErrorPage({
   }, [error]);
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center gap-4 px-6 text-center">
-      <h1 className="text-2xl font-semibold">Something went wrong</h1>
-      <p className="max-w-md text-text-secondary">
-        We couldn&apos;t load this page. Please try again.
-      </p>
-      <button
-        className="rounded-button bg-primary px-4 py-2 font-medium text-primary-foreground"
-        onClick={retry}
-        type="button"
-      >
-        Try again
-      </button>
-    </main>
+    <div className="flex min-h-[400px] flex-col items-center justify-center gap-4 p-6 text-center">
+      <h1 className="text-xl font-semibold">Unable to load this page</h1>
+      <p className="text-muted-foreground">Please try again.</p>
+      <Button onClick={retry} type="button">
+        Retry
+      </Button>
+    </div>
   );
 }

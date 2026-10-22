@@ -1,25 +1,16 @@
 export type PatientCondition =
-  | "stable"
-  | "moderate"
-  | "critical";
+  | "Stable"
+  | "Moderate"
+  | "Critical";
 
 export interface Patient {
   id: string;
-
   doctorId: string;
-
   name: string;
-
-  email?: string;
-
-  phone?: string;
-
+  email: string;
+  phone: string;
   condition: PatientCondition;
-
-  dateOfBirth?: string;
-
   createdAt: string;
-
   updatedAt: string;
 }
 
@@ -32,3 +23,14 @@ export interface PatientQueryParams {
   from?: string;
   to?: string;
 }
+
+export interface CreatePatientPayload {
+  doctorId: string;
+  name: string;
+  email: string;
+  phone: string;
+  condition: PatientCondition;
+}
+
+export type UpdatePatientPayload =
+  Partial<CreatePatientPayload>;

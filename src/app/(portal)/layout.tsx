@@ -1,36 +1,52 @@
-import Link from "next/link";
-import type { ReactNode } from "react";
+import type {
+  ReactNode,
+} from "react";
 
-const navigation = [
-  { href: "/dashboard", label: "Dashboard" },
-  { href: "/doctors", label: "Doctors" },
-  { href: "/patients", label: "Patients" },
-];
+import {
+  AppHeader,
+} from "@/components/layout/app-header";
 
-export default function PortalLayout({ children }: { children: ReactNode }) {
+import {
+  AppShell,
+} from "@/components/layout/app-shell";
+
+import {
+  AppSidebar,
+} from "@/components/layout/app-sidebar";
+
+import {
+  PageContainer,
+} from "@/components/layout/page-container";
+import { AuthSessionSync } from "@/features/auth/components/auth-session-sync";
+
+interface PortalLayoutProps {
+  children: ReactNode;
+}
+
+export default function PortalLayout({
+  children,
+}: PortalLayoutProps) {
   return (
-    <div className="flex min-h-screen flex-col">
-      <header className="border-b border-border bg-surface">
-        <div className="mx-auto flex w-full max-w-7xl flex-col gap-4 px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
-          <Link className="text-lg font-semibold text-primary-800" href="/">
-            Doctor Tracker
-          </Link>
-          <nav aria-label="Main navigation" className="flex gap-5">
-            {navigation.map((item) => (
-              <Link
-                className="text-sm font-medium text-text-secondary transition-colors hover:text-primary"
-                href={item.href}
-                key={item.href}
-              >
-                {item.label}
-              </Link>
-            ))}
-          </nav>
+    <AppShell>
+      <AuthSessionSync />
+      <div className="flex min-h-screen">
+        <AppSidebar />
+
+        <div
+          className="
+            flex
+            min-w-0
+            flex-1
+            flex-col
+          "
+        >
+          <AppHeader />
+
+          <PageContainer>
+            {children}
+          </PageContainer>
         </div>
-      </header>
-      <main className="mx-auto w-full max-w-7xl flex-1 px-6 py-10">
-        {children}
-      </main>
-    </div>
+      </div>
+    </AppShell>
   );
 }
