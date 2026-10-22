@@ -4,8 +4,7 @@ import axios, {
 } from "axios";
 
 export const apiClient = axios.create({
-  baseURL:
-    process.env.NEXT_PUBLIC_API_URL,
+  baseURL: "/api/backend",
 
   withCredentials: true,
 
@@ -17,7 +16,7 @@ export const apiClient = axios.create({
 });
 
 const refreshClient = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  baseURL: "/api/backend",
   withCredentials: true,
   timeout: 10_000,
   headers: {
