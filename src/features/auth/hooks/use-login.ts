@@ -1,6 +1,6 @@
 "use client";
 
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 
@@ -29,12 +29,14 @@ function getSafeRedirect(value: string | null) {
 export function useLogin() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const queryClient = useQueryClient();
   const dispatch = useAppDispatch();
 
   return useMutation({
     mutationFn: authService.login,
     onSuccess: (user) => {
       dispatch(setUser(user));
+      queryClient.setQueryData(["auth", "me"], user);
       toast.success("Login successful");
       router.replace(
         getSafeRedirect(searchParams.get("redirect")),
