@@ -18,9 +18,11 @@ import {
 import {
   Button,
 } from "@/components/ui/button";
+import { useLogout } from "@/features/auth/hooks/use-logout";
 
 export function AppSidebar() {
   const pathname = usePathname();
+  const logout = useLogout();
 
   return (
     <aside
@@ -129,6 +131,8 @@ export function AppSidebar() {
       <div className="border-t p-4">
         <Button
           variant="ghost"
+          disabled={logout.isPending}
+          onClick={() => logout.mutate()}
           className="
             w-full
             justify-start
@@ -138,7 +142,7 @@ export function AppSidebar() {
         >
           <LogOut className="size-4" />
 
-          Logout
+          {logout.isPending ? "Logging out..." : "Logout"}
         </Button>
       </div>
     </aside>

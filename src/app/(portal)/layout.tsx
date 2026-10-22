@@ -17,6 +17,7 @@ import {
 import {
   PageContainer,
 } from "@/components/layout/page-container";
+import { AuthSessionSync } from "@/features/auth/components/auth-session-sync";
 
 interface PortalLayoutProps {
   children: ReactNode;
@@ -27,6 +28,7 @@ export default function PortalLayout({
 }: PortalLayoutProps) {
   return (
     <AppShell>
+      <AuthSessionSync />
       <div className="flex min-h-screen">
         <AppSidebar />
 

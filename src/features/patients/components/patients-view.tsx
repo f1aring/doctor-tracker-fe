@@ -6,6 +6,7 @@ import { ErrorState } from "@/components/feedback/error-state";
 import { LoadingState } from "@/components/feedback/loading-state";
 import { PageHeader } from "@/components/layout/page-header";
 
+import { AddPatientDialog } from "./add-patient-dialog";
 import { PatientFilters } from "./patient-filters";
 import { PatientsTable } from "./patients-table";
 import { usePatients } from "../hooks/use-patients";
@@ -34,6 +35,7 @@ export function PatientsView() {
       <PageHeader
         title="Patients"
         description="View and manage patient records."
+        actions={<AddPatientDialog />}
       />
 
       <PatientFilters

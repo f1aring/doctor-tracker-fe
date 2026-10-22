@@ -1,38 +1,11 @@
-import {
-  Plus,
-} from "lucide-react";
+import { DoctorDetails } from "@/features/doctors/component/doctor-details";
 
-import {
-  Button,
-} from "@/components/ui/button";
+export default async function DoctorPage({
+  params,
+}: {
+  params: Promise<{ doctorId: string }>;
+}) {
+  const { doctorId } = await params;
 
-import {
-  PageHeader,
-} from "@/components/layout/page-header";
-
-import {
-  EmptyState,
-} from "@/components/feedback/empty-state";
-
-export default function DoctorsPage() {
-  return (
-    <div>
-      <PageHeader
-        title="Doctors"
-        description="Manage doctors and their associated patients."
-        actions={
-          <Button>
-            <Plus className="size-4" />
-
-            Add Doctor
-          </Button>
-        }
-      />
-
-      <EmptyState
-        title="No doctors found"
-        description="Doctors will appear here once they are added."
-      />
-    </div>
-  );
+  return <DoctorDetails id={doctorId} />;
 }
