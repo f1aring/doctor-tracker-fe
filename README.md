@@ -15,7 +15,9 @@ Doctor Tracker is an administrative web application for managing doctors and the
 
 ### Backend
 
-The frontend expects a REST API. Configure its base URL using `NEXT_PUBLIC_API_URL`. Authentication expects `/auth/login`, `/auth/me`, and `/auth/logout`; the backend should set and validate the `doctor_tracker_session` cookie.
+The frontend expects a REST API. Configure its base URL using `NEXT_PUBLIC_API_URL`. Authentication expects `/auth/login`, `/auth/me`, `/auth/refresh`, and `/auth/logout`. The backend should set `access_token` and `refresh_token` as `HttpOnly` cookies on login, rotate the access cookie on refresh, and clear both cookies on logout. The frontend sends cookies with API requests and retries a failed request once after refreshing; it never reads or stores token values in JavaScript. The backend must validate authorization on every protected endpoint.
+
+For cross-origin frontend/API deployments, configure CORS to allow the exact frontend origin and credentials. Set cookies with `Secure` in production and an appropriate `SameSite` policy for the deployment domains.
 
 ## Local Setup
 

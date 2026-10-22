@@ -1,7 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 
 const protectedRoutes = ["/dashboard", "/doctors", "/patients"];
-const sessionCookieName = "doctor_tracker_session";
+const authCookieNames = ["access_token", "refresh_token"];
 
 function isProtectedRoute(pathname: string) {
   return protectedRoutes.some(
@@ -11,11 +11,11 @@ function isProtectedRoute(pathname: string) {
 
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  const hasSession = Boolean(
-    request.cookies.get(sessionCookieName)?.value,
+  const hasAuthCookie = authCookieNames.some(
+    (cookieName) => Boolean(request.cookies.get(cookieName)?.value),
   );
 
-  if (isProtectedRoute(pathname) && !hasSession) {
+  if (isProtectedRoute(pathname) && !hasAuthCookie) {
     const loginUrl = new URL("/login", request.url);
     loginUrl.searchParams.set(
       "redirect",
@@ -24,7 +24,7 @@ export function proxy(request: NextRequest) {
     return NextResponse.redirect(loginUrl);
   }
 
-  if (pathname === "/login" && hasSession) {
+  if (pathname === "/login" && hasAuthCookie) {
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 
