@@ -28,9 +28,11 @@ import {
 
 import { useDeleteDoctor } from "../hooks/use-delete-doctor";
 import type { Doctor } from "../types/doctor.types";
+import { EditDoctorDialog } from "./edit-doctor-dialog";
 
 export function DoctorRowActions({ doctor }: { doctor: Doctor }) {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
   const deleteDoctor = useDeleteDoctor();
 
   function handleDelete() {
@@ -53,7 +55,12 @@ export function DoctorRowActions({ doctor }: { doctor: Doctor }) {
         >
           <MoreHorizontal aria-hidden="true" className="size-4" />
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
+        <DropdownMenuContent
+          align="end"
+          side="bottom"
+          sideOffset={6}
+          className="w-48"
+        >
           <DropdownMenuGroup>
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuSeparator />
@@ -64,7 +71,7 @@ export function DoctorRowActions({ doctor }: { doctor: Doctor }) {
             >
               View Doctor
             </DropdownMenuItem>
-            <DropdownMenuItem disabled>
+            <DropdownMenuItem onClick={() => setEditDialogOpen(true)}>
               Edit Doctor
             </DropdownMenuItem>
             <DropdownMenuSeparator />
@@ -77,6 +84,13 @@ export function DoctorRowActions({ doctor }: { doctor: Doctor }) {
           </DropdownMenuGroup>
         </DropdownMenuContent>
       </DropdownMenu>
+
+      <EditDoctorDialog
+        doctor={doctor}
+        open={editDialogOpen}
+        onOpenChange={setEditDialogOpen}
+        showTrigger={false}
+      />
 
       <AlertDialog
         open={deleteDialogOpen}

@@ -1,5 +1,6 @@
 "use client";
 
+import axios from "axios";
 import {
   useMutation,
   useQueryClient,
@@ -36,6 +37,13 @@ export function useDeleteDoctor() {
       toast.success("Doctor deleted successfully.");
     },
     onError: (error) => {
+      if (axios.isAxiosError(error) && error.response?.status === 409) {
+        toast.error(
+          "This doctor still has assigned patients. Reassign or remove those patients before deleting the doctor.",
+        );
+        return;
+      }
+
       toast.error(getApiErrorMessage(error));
     },
   });

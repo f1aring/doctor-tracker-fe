@@ -42,8 +42,21 @@ const SPECIALIZATIONS = [
   "Pediatrics",
 ];
 
-export function EditDoctorDialog({ doctor }: { doctor: Doctor }) {
-  const [open, setOpen] = useState(false);
+interface EditDoctorDialogProps {
+  doctor: Doctor;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  showTrigger?: boolean;
+}
+
+export function EditDoctorDialog({
+  doctor,
+  open: controlledOpen,
+  onOpenChange,
+  showTrigger = true,
+}: EditDoctorDialogProps) {
+  const [uncontrolledOpen, setUncontrolledOpen] = useState(false);
+  const open = controlledOpen ?? uncontrolledOpen;
   const updateDoctor = useUpdateDoctor();
   const {
     control,
@@ -83,7 +96,7 @@ export function EditDoctorDialog({ doctor }: { doctor: Doctor }) {
         data: values,
       });
       toast.success("Doctor updated successfully");
-      setOpen(false);
+      handleOpenChange(false);
     } catch (error) {
       toast.error(getApiErrorMessage(error));
     }
@@ -94,19 +107,24 @@ export function EditDoctorDialog({ doctor }: { doctor: Doctor }) {
       return;
     }
 
-    setOpen(nextOpen);
+    if (controlledOpen === undefined) {
+      setUncontrolledOpen(nextOpen);
+    }
+    onOpenChange?.(nextOpen);
   }
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogTrigger
-        render={
-          <Button type="button" variant="outline">
-            <Pencil aria-hidden="true" className="size-4" />
-            Edit Doctor
-          </Button>
-        }
-      />
+      {showTrigger && (
+        <DialogTrigger
+          render={
+            <Button type="button" variant="outline">
+              <Pencil aria-hidden="true" className="size-4" />
+              Edit Doctor
+            </Button>
+          }
+        />
+      )}
 
       <DialogContent className="sm:max-w-lg">
         <DialogHeader>
