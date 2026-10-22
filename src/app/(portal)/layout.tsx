@@ -17,7 +17,7 @@ import {
 import {
   PageContainer,
 } from "@/components/layout/page-container";
-import { AuthSessionSync } from "@/features/auth/components/auth-session-sync";
+import { PortalAuthGuard } from "@/features/auth/components/portal-auth-guard";
 
 interface PortalLayoutProps {
   children: ReactNode;
@@ -27,26 +27,27 @@ export default function PortalLayout({
   children,
 }: PortalLayoutProps) {
   return (
-    <AppShell>
-      <AuthSessionSync />
-      <div className="flex min-h-screen">
-        <AppSidebar />
+    <PortalAuthGuard>
+      <AppShell>
+        <div className="flex min-h-screen">
+          <AppSidebar />
 
-        <div
-          className="
-            flex
-            min-w-0
-            flex-1
-            flex-col
-          "
-        >
-          <AppHeader />
+          <div
+            className="
+              flex
+              min-w-0
+              flex-1
+              flex-col
+            "
+          >
+            <AppHeader />
 
-          <PageContainer>
-            {children}
-          </PageContainer>
+            <PageContainer>
+              {children}
+            </PageContainer>
+          </div>
         </div>
-      </div>
-    </AppShell>
+      </AppShell>
+    </PortalAuthGuard>
   );
 }
