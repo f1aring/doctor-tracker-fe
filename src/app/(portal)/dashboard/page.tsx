@@ -1,45 +1,62 @@
-import Link from "next/link";
-import type { Metadata } from "next";
+import {
+  Stethoscope,
+  Users,
+  Activity,
+  HeartPulse,
+} from "lucide-react";
 
-export const metadata: Metadata = {
-  title: "Dashboard",
-};
+import {
+  PageHeader,
+} from "@/components/layout/page-header";
 
-const sections = [
-  {
-    href: "/doctors",
-    title: "Doctors",
-    description: "Browse and manage doctor profiles.",
-  },
-  {
-    href: "/patients",
-    title: "Patients",
-    description: "Browse and manage patient records.",
-  },
-];
+import {
+  StatCard,
+} from "@/components/shared/stat-card";
 
 export default function DashboardPage() {
   return (
-    <section>
-      <p className="text-sm font-medium text-primary">Overview</p>
-      <h1 className="mt-2 text-3xl font-semibold">Dashboard</h1>
-      <p className="mt-2 text-text-secondary">
-        Welcome to Doctor Tracker. Choose a section to get started.
-      </p>
-      <div className="mt-8 grid gap-4 sm:grid-cols-2">
-        {sections.map((section) => (
-          <Link
-            className="rounded-card border border-border bg-surface p-6 shadow-card transition-shadow hover:shadow-modal"
-            href={section.href}
-            key={section.href}
-          >
-            <h2 className="text-lg font-semibold">{section.title}</h2>
-            <p className="mt-2 text-sm text-text-secondary">
-              {section.description}
-            </p>
-          </Link>
-        ))}
+    <div>
+      <PageHeader
+        title="Dashboard"
+        description="Overview of your doctors and patients."
+      />
+
+      <div
+        className="
+          grid
+          gap-4
+          sm:grid-cols-2
+          xl:grid-cols-4
+        "
+      >
+        <StatCard
+          title="Total Doctors"
+          value="24"
+          description="Active doctors"
+          icon={Stethoscope}
+        />
+
+        <StatCard
+          title="Total Patients"
+          value="1,284"
+          description="Registered patients"
+          icon={Users}
+        />
+
+        <StatCard
+          title="Active Patients"
+          value="1,120"
+          description="Currently active"
+          icon={Activity}
+        />
+
+        <StatCard
+          title="Critical Patients"
+          value="18"
+          description="Requires attention"
+          icon={HeartPulse}
+        />
       </div>
-    </section>
+    </div>
   );
 }
